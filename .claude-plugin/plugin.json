@@ -1,10 +1,20 @@
 {
   "name": "mkroo-skills",
   "description": "mkroo's personal development skill collection for Claude Code.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "mkroo"
   },
   "repository": "https://github.com/mkroo/skills",
-  "license": "MIT"
+  "license": "MIT",
+  "mcpServers": {
+    "gtm-ga4": {
+      "command": "npx",
+      "args": ["--yes", "tsx", "${CLAUDE_PLUGIN_ROOT}/mcp-servers/gtm-ga4/src/index.ts"],
+      "cwd": "${CLAUDE_PLUGIN_ROOT}/mcp-servers/gtm-ga4",
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "${GOOGLE_APPLICATION_CREDENTIALS}"
+      }
+    }
+  }
 }
