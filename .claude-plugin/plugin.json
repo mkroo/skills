@@ -1,0 +1,10 @@
+{
+  "name": "og-validator",
+  "description": "Validate OpenGraph meta tags for social sharing previews across platforms like KakaoTalk, Facebook, Twitter/X, Discord, Slack, LinkedIn, and WhatsApp.",
+  "version": "0.1.0",
+  "author": {
+    "name": "ansrl"
+  },
+  "repository": "https://github.com/ansrl/og-validator-skill",
+  "license": "MIT"
+}

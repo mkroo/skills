@@ -1,0 +1,32 @@
+{
+  "name": "og-validator-marketplace",
+  "owner": {
+    "name": "ansrl"
+  },
+  "metadata": {
+    "description": "OpenGraph meta tag validator for social sharing previews",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "og-validator",
+      "description": "Validate OpenGraph meta tags and preview images for KakaoTalk, Facebook, Twitter/X, Discord, Slack, LinkedIn, and WhatsApp.",
+      "source": "./",
+      "version": "0.1.0",
+      "author": {
+        "name": "ansrl"
+      },
+      "keywords": [
+        "opengraph",
+        "og-image",
+        "social-sharing",
+        "kakaotalk",
+        "meta-tags",
+        "seo",
+        "preview",
+        "validation"
+      ],
+      "category": "web-development"
+    }
+  ]
+}
