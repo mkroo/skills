@@ -1,6 +1,6 @@
 # mkroo/skills
 
-A collection of personal development skills for Claude Code.
+Claude Code plugin — skills와 MCP 서버 모음.
 
 ## Installation
 
@@ -10,52 +10,15 @@ claude plugin add https://github.com/mkroo/skills
 
 ## Skills
 
-### og-validator
+### [og-validator](skills/og-validator/)
 
-Validate OpenGraph meta tags and preview images for social sharing platforms.
+OpenGraph 메타 태그 검증. 페이지를 가져와서 OG/Twitter Card 태그를 추출하고 플랫폼별 요구사항(KakaoTalk, Facebook, Twitter/X 등)에 맞는지 검증 리포트를 생성한다.
 
-- Fetches your page (including localhost dev servers), extracts all OG/Twitter Card tags
-- Validates against platform-specific requirements (KakaoTalk, Facebook, Twitter/X, Discord, Slack, LinkedIn, WhatsApp)
-- Generates a structured report with fix suggestions
+## MCP Servers
 
-**Usage:**
+### [gtm-ga4](mcp-servers/gtm-ga4/)
 
-```
-> Check the OG tags on http://localhost:3000/blog/my-post
-> 이 페이지 OG 확인해줘 http://localhost:3000
-> Validate OpenGraph for http://localhost:5173/about
-```
-
-For full details, see [skills/og-validator/SKILL.md](skills/og-validator/SKILL.md).
-
-## Project Structure
-
-```
-skills/
-├── .claude-plugin/
-│   ├── plugin.json              # Plugin metadata (mkroo-skills)
-│   └── marketplace.json         # Marketplace registry
-├── skills/
-│   └── og-validator/            # OpenGraph validator skill
-│       ├── SKILL.md
-│       ├── references/
-│       │   └── platform-specs.md
-│       └── scripts/
-│           ├── extract_og_tags.py
-│           └── check_image.py
-├── LICENSE
-├── .gitignore
-└── README.md
-```
-
-## Adding a New Skill
-
-1. Create a new directory under `skills/`:
-   ```
-   skills/my-new-skill/
-   └── SKILL.md
-   ```
-2. The skill will be auto-discovered by Claude Code via the `skills/` directory convention.
+Google Tag Manager + Google Analytics 4 관리. 코드의 이벤트를 분석해서 GTM 변수/트리거/태그 생성, GA4 맞춤 측정기준 등록, 게시까지 대화 한번으로 처리한다. `npm install` 필요 — [설정 가이드](mcp-servers/gtm-ga4/README.md#setup) 참고.
 
 ## License
 

@@ -24,7 +24,13 @@
         "meta-tags",
         "seo",
         "validation",
-        "developer-tools"
+        "developer-tools",
+        "google-tag-manager",
+        "gtm",
+        "google-analytics",
+        "ga4",
+        "analytics",
+        "mcp"
       ],
       "category": "web-development"
     }
