@@ -47,41 +47,67 @@ GTM 설정은 반복적이고 실수하기 쉽다.
 
 ## Setup
 
-### 1. GCP API 활성화
+`gcloud` CLI로 대부분의 설정을 처리할 수 있다. 웹 콘솔이 필요한 건 GTM/GA4 제품 권한 부여뿐.
 
-[Google Cloud Console](https://console.cloud.google.com/apis/library)에서 두 API를 활성화한다:
-
-- **Tag Manager API**
-- **Google Analytics Admin API**
-
-### 2. 서비스 계정 생성
-
-1. GCP Console → IAM → 서비스 계정 → 만들기
-2. JSON 키 다운로드
-3. 안전한 경로에 저장 (예: `~/.config/gcloud/gtm-sa-key.json`)
-
-### 3. 권한 부여
-
-**GTM:**
-- [tagmanager.google.com](https://tagmanager.google.com) → 컨테이너 설정 → 사용자 관리
-- 서비스 계정 이메일 추가 → **편집** 권한
-
-**GA4:**
-- [analytics.google.com](https://analytics.google.com) → 관리 → 속성 액세스 관리
-- 서비스 계정 이메일 추가 → **편집자** 역할
-
-### 4. 환경변수 설정
+### 1. GCP 프로젝트 + API 활성화
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/gcloud/gtm-sa-key.json"
+# 기존 프로젝트 사용 또는 새로 생성
+gcloud config set project YOUR_PROJECT_ID
+
+# API 활성화
+gcloud services enable tagmanager.googleapis.com analyticsadmin.googleapis.com
 ```
 
-셸 프로필(`~/.zshrc` 등)에 추가하면 영구 적용.
+### 2. 서비스 계정 생성 + 키 발급
 
-### 5. 의존성 설치
+```bash
+# 서비스 계정 생성
+gcloud iam service-accounts create gtm-ga4-mcp \
+  --display-name="GTM GA4 MCP Server"
+
+# JSON 키 다운로드
+gcloud iam service-accounts keys create ~/.config/gcloud/gtm-sa-key.json \
+  --iam-account=gtm-ga4-mcp@YOUR_PROJECT_ID.iam.gserviceaccount.com
+```
+
+서비스 계정 이메일: `gtm-ga4-mcp@YOUR_PROJECT_ID.iam.gserviceaccount.com`
+
+> GCP IAM 역할은 별도로 부여할 필요 없다. GTM/GA4는 자체 사용자 관리를 사용.
+
+### 3. GTM 컨테이너 권한 부여 (웹 필수)
+
+[tagmanager.google.com](https://tagmanager.google.com) → 컨테이너 설정 → 사용자 관리:
+
+- 서비스 계정 이메일 추가
+- 권한: **게시** (게시 권한이 편집을 포함)
+
+### 4. GA4 속성 권한 부여 (웹 필수)
+
+[analytics.google.com](https://analytics.google.com) → 관리 → 속성 액세스 관리:
+
+- 서비스 계정 이메일 추가
+- 역할: **편집자**
+
+### 5. 환경변수 설정
+
+```bash
+# ~/.zshrc에 추가
+echo 'export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/gcloud/gtm-sa-key.json"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+### 6. 의존성 설치
 
 ```bash
 cd mcp-servers/gtm-ga4 && npm install
+```
+
+### 7. 플러그인 설치 + 재시작
+
+```bash
+claude plugin add https://github.com/mkroo/skills
+# Claude Code 재시작 후 gtm_*, ga4_* 도구 사용 가능
 ```
 
 ## Usage Examples
