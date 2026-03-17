@@ -1,20 +1,20 @@
 {
-  "name": "og-validator-marketplace",
+  "name": "mkroo-skills",
   "owner": {
-    "name": "ansrl"
+    "name": "mkroo"
   },
   "metadata": {
-    "description": "OpenGraph meta tag validator for social sharing previews",
+    "description": "mkroo's personal development skill collection for Claude Code",
     "version": "0.1.0"
   },
   "plugins": [
     {
-      "name": "og-validator",
-      "description": "Validate OpenGraph meta tags and preview images for KakaoTalk, Facebook, Twitter/X, Discord, Slack, LinkedIn, and WhatsApp.",
+      "name": "mkroo-skills",
+      "description": "A collection of development skills including OpenGraph validation, and more to come.",
       "source": "./",
       "version": "0.1.0",
       "author": {
-        "name": "ansrl"
+        "name": "mkroo"
       },
       "keywords": [
         "opengraph",
@@ -23,8 +23,8 @@
         "kakaotalk",
         "meta-tags",
         "seo",
-        "preview",
-        "validation"
+        "validation",
+        "developer-tools"
       ],
       "category": "web-development"
     }

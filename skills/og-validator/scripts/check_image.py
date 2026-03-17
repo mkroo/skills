@@ -52,6 +52,8 @@ def get_jpeg_dimensions(data):
             break
         if i + 3 < len(data):
             length = struct.unpack(">H", data[i + 2 : i + 4])[0]
+            if length < 2:
+                break  # Invalid segment length, avoid infinite loop
             i += 2 + length
         else:
             break
@@ -59,7 +61,7 @@ def get_jpeg_dimensions(data):
 
 
 def get_gif_dimensions(data):
-    if data[:4] not in (b"GIF8",):
+    if data[:6] not in (b"GIF87a", b"GIF89a"):
         return None
     if len(data) < 10:
         return None
@@ -91,11 +93,13 @@ def get_image_format(data):
         return "PNG"
     if data[:2] == b"\xff\xd8":
         return "JPEG"
-    if data[:4] == b"GIF8":
+    if data[:6] in (b"GIF87a", b"GIF89a"):
         return "GIF"
-    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+    if data[:4] == b"RIFF" and len(data) >= 12 and data[8:12] == b"WEBP":
         return "WebP"
-    if data[:4] == b"<svg" or b"<svg" in data[:256]:
+    # SVG: check for XML declaration or direct <svg tag
+    header = data[:512]
+    if header.lstrip()[:4] == b"<svg" or (b"<svg" in header and b"xmlns" in header):
         return "SVG"
     return "UNKNOWN"
 
@@ -183,12 +187,17 @@ def main():
     data = None
     file_size = 0
 
+    MAX_DOWNLOAD_BYTES = 20 * 1024 * 1024  # 20MB safety limit
+
     try:
         if target.startswith("http://") or target.startswith("https://"):
             req = urllib.request.Request(target, headers={"User-Agent": "OGValidatorBot/1.0"})
             with urllib.request.urlopen(req, timeout=10) as resp:
-                data = resp.read()
+                data = resp.read(MAX_DOWNLOAD_BYTES)
                 file_size = len(data)
+                if file_size >= MAX_DOWNLOAD_BYTES:
+                    print(json.dumps({"error": f"Image exceeds {MAX_DOWNLOAD_BYTES // (1024*1024)}MB limit", "accessible": True}, ensure_ascii=False))
+                    sys.exit(1)
         else:
             with open(target, "rb") as f:
                 data = f.read()

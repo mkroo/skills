@@ -119,9 +119,11 @@ def validate_tags(parser):
     if not parser.og_tags.get("og:url"):
         issues.append({"rule": "F5", "severity": "FAIL", "message": "og:url is missing"})
 
-    # Duplicate tags
+    # Duplicate tags (og:image and og:image:* allow multiple values per OGP spec)
+    MULTI_ALLOWED = {"og:image", "og:image:width", "og:image:height", "og:image:alt", "og:image:type",
+                     "og:video", "og:audio", "og:locale:alternate"}
     for key, value in parser.og_tags.items():
-        if isinstance(value, list):
+        if isinstance(value, list) and key not in MULTI_ALLOWED:
             issues.append({"rule": "F6", "severity": "FAIL", "message": f"Duplicate {key} tags found ({len(value)} instances)"})
 
     # Image URL checks

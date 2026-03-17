@@ -17,12 +17,22 @@ Use `WebFetch` to retrieve the full HTML from the target URL. For localhost deve
 WebFetch → target URL → raw HTML
 ```
 
+> **Note:** `WebFetch` does not execute JavaScript. For SPA frameworks (React, Vue, Next.js CSR, etc.) where OG tags are injected client-side, the extracted HTML may be missing tags. In these cases, warn the user and suggest checking that OG tags are rendered server-side (SSR/SSG) or included in the static HTML `<head>`.
+
 ### Step 2: Extract OG Tags
 
-Run the extraction script to parse all OG and Twitter Card meta tags from the HTML:
+Run the extraction script to parse all OG and Twitter Card meta tags from the HTML. **Always pass HTML via stdin** (not as a command-line argument) to avoid shell escaping issues and ARG_MAX limits:
 
 ```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/og-validator/scripts/extract_og_tags.py "<html>..."
+echo '<html>...' | python3 ${CLAUDE_PLUGIN_ROOT}/skills/og-validator/scripts/extract_og_tags.py
+```
+
+Or use a heredoc for large HTML:
+
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/og-validator/scripts/extract_og_tags.py <<'HTMLEOF'
+<html>...full HTML here...</html>
+HTMLEOF
 ```
 
 The script outputs structured JSON with all detected meta tags, their values, and basic validation flags.

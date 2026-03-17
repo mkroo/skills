@@ -160,7 +160,7 @@ After fixing OG tags, clear platform caches to see updated previews:
 |----------|------|-----|
 | KakaoTalk | OG Cache Clear | https://developers.kakao.com/tool/clear/og |
 | Facebook | Sharing Debugger | https://developers.facebook.com/tools/debug/ |
-| Twitter/X | Card Validator | https://cards-dev.twitter.com/validator |
+| Twitter/X | Post Composer | Compose a tweet with the URL to preview (Card Validator was deprecated in 2022) |
 | LinkedIn | Post Inspector | https://www.linkedin.com/post-inspector/ |
 
 ---

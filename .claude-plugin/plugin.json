@@ -1,10 +1,10 @@
 {
-  "name": "og-validator",
-  "description": "Validate OpenGraph meta tags for social sharing previews across platforms like KakaoTalk, Facebook, Twitter/X, Discord, Slack, LinkedIn, and WhatsApp.",
+  "name": "mkroo-skills",
+  "description": "mkroo's personal development skill collection for Claude Code.",
   "version": "0.1.0",
   "author": {
-    "name": "ansrl"
+    "name": "mkroo"
   },
-  "repository": "https://github.com/ansrl/og-validator-skill",
+  "repository": "https://github.com/mkroo/skills",
   "license": "MIT"
 }
